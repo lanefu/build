@@ -210,7 +210,7 @@ chroot_build_packages()
 				# debchange -l~armbian${REVISION}-${builddate}+ "New Armbian release"
 				debchange -l~armbian${REVISION}+ "New Armbian release"
 				display_alert "Building package"
-				dpkg-buildpackage -b -uc -us -j2
+				dpkg-buildpackage -b -uc -us -j4
 				if [[ \$? -eq 0 ]]; then
 					cd /root/build
 					# install in chroot if other libraries depend on them
