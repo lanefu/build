@@ -193,7 +193,7 @@ compilation_prepare()
 		local maliver="branch:sun50i-a64"
 
 		display_alert "Adding" "Mali drivers for Allwinner SoC ${maliver}" "info"
-		fetch_from_repo "https://github.com/StefanMavrodiev/sunxi-mali" "sunxi-mali" "${maliver}" "yes"
+		fetch_from_repo "https://github.com/StefanMavrodiev/sunxi-mali" "sunxi-mali" "${maliver}" "no"
 
 		# Cleanup
 		git reset --hard HEAD > /dev/null 2>&1
