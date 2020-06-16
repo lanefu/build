@@ -9,6 +9,8 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
+        with:
+          path: build
 #          fetch-depth: 1
       - uses: actions/checkout@v2
         with:
@@ -33,7 +35,7 @@ jobs:
         run: |  
          GIT_COMMIT=${GITHUB_SHA}
          GIT_PREVIOUS_COMMIT=HEAD
-         find . 
+         pwd 
          source ci-testing-tools/jenkins_ci.sh
          
          mkdir -p ${WORKSPACE}/build/userpatches
