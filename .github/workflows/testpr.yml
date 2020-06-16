@@ -21,13 +21,13 @@ jobs:
           path: monorepo-gitwatcher
           fetch-depth: 1
       
-      - run: git checkout HEAD^
-      - name: Get short SHA
-        id: slug
-        run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
-      - name: Get the version
-        id: get_version
-        run: echo "::set-output name=version::${GITHUB_REF#refs/*/}"
+#      - run: git checkout HEAD^
+#      - name: Get short SHA
+#        id: slug
+#        run: echo "::set-output name=sha8::$(echo ${GITHUB_SHA} | cut -c1-8)"
+#      - name: Get the version
+#        id: get_version
+#        run: echo "::set-output name=version::${GITHUB_REF#refs/*/}"
       - name: Compile and update repository
         shell: bash         
         run: |  
