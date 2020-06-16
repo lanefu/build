@@ -1,4 +1,4 @@
-me: build pr kernel
+name: build pr kernel
 # This workflow is triggered on pushes to the repository.
 on: [push, pull_request]
 
