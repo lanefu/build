@@ -309,7 +309,7 @@ family_tweaks_bsp()
                 cp $SRC/packages/bsp/pinebook-pro/10-usb-kbd.hwdb $destination/etc/udev/hwdb.d/
 		## brightness and power management defaults
 		mkdir -p $destination/usr/local/share/xdg/xfce4/xfconf/xfce-perchannel-xml/		
- 	        cp $SRC/packages/bsp/pinebook-pro/xfce4-power-manager.xml 
+ 	        cp $SRC/packages/bsp/pinebook-pro/xfce4-power-manager.xml $destination/usr/local/share/xdg/xfce4/xfconf/xfce-perchannel-xml/ 
 		## additional keyboard configs in lib/desktop.sh
 	fi
 
