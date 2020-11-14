@@ -21,8 +21,8 @@ case $BRANCH in
 
 	current)
 
-		KERNELSOURCE="https://github.com/megous/linux"
-		KERNELBRANCH="branch:orange-pi-5.9"
+		#KERNELSOURCE="https://github.com/megous/linux"
+		KERNELBRANCH="tag:v5.9"
 		KERNELPATCHDIR='sunxi-'$BRANCH
 
 	;;
