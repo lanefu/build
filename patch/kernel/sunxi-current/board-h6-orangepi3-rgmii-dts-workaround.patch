@@ -1,0 +1,13 @@
+diff --git a/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi-3.dts b/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi-3.dts
+index 95aa433fa280..a976129d8e02 100644
+--- a/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi-3.dts
++++ b/arch/arm64/boot/dts/allwinner/sun50i-h6-orangepi-3.dts
+@@ -149,7 +149,7 @@ hdmi_out_con: endpoint {
+ &emac {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&ext_rgmii_pins>;
+-	phy-mode = "rgmii-id";
++	phy-mode = "rgmii";
+ 	phy-handle = <&ext_rgmii_phy>;
+ 	/*
+ 	 * The board uses 2.5V RGMII signalling. Power sequence to enable
