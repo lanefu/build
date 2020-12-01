@@ -1,0 +1,29 @@
+  [   29.360965] meson8b-dwmac ff3f0000.ethernet eth0: Link is Down
+  [   34.569012] meson8b-dwmac ff3f0000.ethernet eth0: PHY [0.0:00] driver [RTL8211F Gigabit Ethernet] (irq=31)
+  [   34.676732] meson8b-dwmac ff3f0000.ethernet: Failed to reset the dma
+  [   34.678874] meson8b-dwmac ff3f0000.ethernet eth0: stmmac_hw_setup: DMA engine initialization failed
+  [   34.687850] meson8b-dwmac ff3f0000.ethernet eth0: stmmac_open: Hw setup failed
+
+Fixes: 658e4129bb81 ("arm64: dts: meson: g12b: odroid-n2: add the Ethernet PHY reset line")
+Signed-off-by: Stefan Agner <stefan@agner.ch>
+---
+ arch/arm64/boot/dts/amlogic/meson-g12b-odroid-n2.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-n2.dtsi b/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-n2.dtsi
+index 6982632ae646..a5652caacb27 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-n2.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-n2.dtsi
+@@ -413,7 +413,7 @@ external_phy: ethernet-phy@0 {
+ 		max-speed = <1000>;
+ 
+ 		reset-assert-us = <10000>;
+-		reset-deassert-us = <30000>;
++		reset-deassert-us = <50000>;
+ 		reset-gpios = <&gpio GPIOZ_15 (GPIO_ACTIVE_LOW | GPIO_OPEN_DRAIN)>;
+ 
+ 		interrupt-parent = <&gpio_intc>;
+-- 
+2.29.2
+
+  
