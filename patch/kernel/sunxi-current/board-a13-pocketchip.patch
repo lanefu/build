@@ -1,0 +1,317 @@
+diff --git a/arch/arm/boot/dts/sun5i-r8-chip.dts b/arch/arm/boot/dts/sun5i-r8-chip.dts
+index 4bf4943d4..d0d75e66e 100644
+--- a/arch/arm/boot/dts/sun5i-r8-chip.dts
++++ b/arch/arm/boot/dts/sun5i-r8-chip.dts
+@@ -86,6 +86,235 @@ onewire {
+ 		compatible = "w1-gpio";
+ 		gpios = <&pio 3 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>; /* PD2 */
+ 	};
++	dma-controller@1c02000 {
++		compatible = "allwinner,sun4i-a10-dma";
++		reg = <0x1c02000 0x1000>;
++		interrupts = <0x1b>;
++		clocks = <0x02 0x1b>;
++		#dma-cells = <0x02>;
++		phandle = <0x04>;
++	};
++
++	nand-controller@1c03000 {
++		compatible = "allwinner,sun4i-a10-nand";
++		reg = <0x1c03000 0x1000>;
++		interrupts = <0x25>;
++		clocks = <0x02 0x20 0x02 0x3f>;
++		clock-names = "ahb\0mod";
++		dmas = <0x04 0x01 0x03>;
++		dma-names = "rxtx";
++		status = "okay";
++		#address-cells = <0x01>;
++		#size-cells = <0x00>;
++		pinctrl-names = "default";
++		pinctrl-0 = <0x05 0x06 0x07>;
++
++		nand@0 {
++			#address-cells = <0x02>;
++			#size-cells = <0x02>;
++			reg = <0x00>;
++			allwinner,rb = <0x00>;
++			nand-ecc-mode = "hw";
++			nand-on-flash-bbt;
++
++			partitions {
++				compatible = "fixed-partitions";
++				#address-cells = <0x02>;
++				#size-cells = <0x02>;
++
++				spl@0 {
++					label = "SPL";
++					reg = <0x00 0x00 0x00 0x400000>;
++				};
++
++				spl-backup@400000 {
++					label = "SPL.backup";
++					reg = <0x00 0x400000 0x00 0x400000>;
++				};
++
++				u-boot@800000 {
++					label = "U-Boot";
++					reg = <0x00 0x800000 0x00 0x400000>;
++				};
++
++				env@c00000 {
++					label = "env";
++					reg = <0x00 0xc00000 0x00 0x400000>;
++				};
++
++				bootfs@1000000 {
++					label = "bootfs";
++					reg = <0x00 0x1000000 0x00 0x2000000>;
++				};
++
++				rootfs@3000000 {
++					label = "rootfs";
++					slc-mode;
++					reg = <0x00 0x3000000 0x00 0xfd000000>;
++				};
++			};
++		};
++	};
++	pinctrl@1c20800 {
++			reg = <0x1c20800 0x400>;
++			interrupts = <0x1c>;
++			clocks = <0x02 0x35 0x19 0x1a>;
++			clock-names = "apb\0hosc\0losc";
++			gpio-controller;
++			interrupt-controller;
++			#interrupt-cells = <0x03>;
++			#gpio-cells = <0x03>;
++			compatible = "allwinner,sun5i-a13-pinctrl";
++			vcc-pb-supply = <0x10>;
++			vcc-pc-supply = <0x10>;
++			vcc-pd-supply = <0x10>;
++			vcc-pf-supply = <0x10>;
++			vcc-pg-supply = <0x10>;
++			phandle = <0x14>;
++
++			emac-pd-pins {
++				pins = "PD6\0PD7\0PD10\0PD11\0PD12\0PD13\0PD14\0PD15\0PD18\0PD19\0PD20\0PD21\0PD22\0PD23\0PD24\0PD25\0PD26\0PD27";
++				function = "emac";
++			};
++
++			i2c0-pins {
++				pins = "PB0\0PB1";
++				function = "i2c0";
++				phandle = <0x1e>;
++			};
++
++			i2c1-pins {
++				pins = "PB15\0PB16";
++				function = "i2c1";
++				drive-strength = <0x0a>;
++				bias-disable;
++				phandle = <0x1f>;
++			};
++
++			i2c2-pins {
++				pins = "PB17\0PB18";
++				function = "i2c2";
++				phandle = <0x20>;
++			};
++
++			ir0-rx-pin {
++				pins = "PB4";
++				function = "ir0";
++			};
++
++			lcd-rgb565-pins {
++				pins = "PD3\0PD4\0PD5\0PD6\0PD7\0PD10\0PD11\0PD12\0PD13\0PD14\0PD15\0PD19\0PD20\0PD21\0PD22\0PD23\0PD24\0PD25\0PD26\0PD27";
++				function = "lcd0";
++				drive-strength = <0x0a>;
++				bias-disable;
++				phandle = <0x0a>;
++			};
++
++			lcd-rgb666-pins {
++				pins = "PD2\0PD3\0PD4\0PD5\0PD6\0PD7\0PD10\0PD11\0PD12\0PD13\0PD14\0PD15\0PD18\0PD19\0PD20\0PD21\0PD22\0PD23\0PD24\0PD25\0PD26\0PD27";
++				function = "lcd0";
++			};
++
++			mmc0-pins {
++				pins = "PF0\0PF1\0PF2\0PF3\0PF4\0PF5";
++				function = "mmc0";
++				drive-strength = <0x1e>;
++				bias-pull-up;
++				phandle = <0x0f>;
++			};
++
++			mmc2-4bit-pc-pins {
++				pins = "PC6\0PC7\0PC8\0PC9\0PC10\0PC11";
++				function = "mmc2";
++				drive-strength = <0x1e>;
++				bias-pull-up;
++			};
++
++			mmc2-8bit-pins {
++				pins = "PC6\0PC7\0PC8\0PC9\0PC10\0PC11\0PC12\0PC13\0PC14\0PC15";
++				function = "mmc2";
++				drive-strength = <0x1e>;
++				bias-pull-up;
++			};
++
++			nand-pins {
++				pins = "PC0\0PC1\0PC2\0PC5\0PC8\0PC9\0PC10\0PC11\0PC12\0PC13\0PC14\0PC15";
++				function = "nand0";
++				phandle = <0x05>;
++			};
++
++			nand-cs0-pin {
++				pins = "PC4";
++				function = "nand0";
++				phandle = <0x06>;
++			};
++
++			nand-rb0-pin {
++				pins = "PC6";
++				function = "nand0";
++				phandle = <0x07>;
++			};
++
++			pwm0-pin {
++				pins = "PB2";
++				function = "pwm";
++				drive-strength = <0x0a>;
++				bias-disable;
++				phandle = <0x25>;
++			};
++
++			spi2-pe-pins {
++				pins = "PE1\0PE2\0PE3";
++				function = "spi2";
++				phandle = <0x18>;
++			};
++
++			spi2-cs0-pe-pin {
++				pins = "PE0";
++				function = "spi2";
++			};
++
++			uart1-pe-pins {
++				pins = "PE10\0PE11";
++				function = "uart1";
++			};
++
++			uart1-pg-pins {
++				pins = "PG3\0PG4";
++				function = "uart1";
++				phandle = <0x1b>;
++			};
++
++			uart2-pd-pins {
++				pins = "PD2\0PD3";
++				function = "uart2";
++			};
++
++			uart2-cts-rts-pd-pins {
++				pins = "PD4\0PD5";
++				function = "uart2";
++			};
++
++			uart3-pg-pins {
++				pins = "PG9\0PG10";
++				function = "uart3";
++				phandle = <0x1c>;
++			};
++
++			uart3-cts-rts-pg-pins {
++				pins = "PG11\0PG12";
++				function = "uart3";
++				phandle = <0x1d>;
++			};
++
++			chip_backlight_enable@0 {
++				pins = "PD18";
++				function = "gpio_out";
++				drive-strength = <0x0a>;
++				bias-disable;
++				phandle = <0x2b>;
++			};
++		};
+ };
+ 
+ &be0 {
+@@ -131,7 +360,75 @@ &battery_power_supply {
+ };
+ 
+ &i2c1 {
+-	status = "disabled";
++	
++	compatible = "allwinner,sun4i-a10-i2c";
++	reg = <0x1c2b000 0x400>;
++	interrupts = <0x08>;
++	clocks = <0x02 0x39>;
++	pinctrl-names = "default";
++	pinctrl-0 = <0x1f>;
++	status = "okay";
++	#address-cells = <0x01>;
++	#size-cells = <0x00>;
++
++	keyboard@34 {
++		compatible = "ti,tca8418";
++		reg = <0x34>;
++		interrupt-parent = <0x14>;
++		interrupts = <0x06 0x01 0x02>;
++		keypad,num-rows = <0x06>;
++		keypad,num-columns = <0x0a>;
++		keypad,autorepeat;
++		linux,keymap = <0x10002 0x20003 0x30004 0x40005 0x50006 0x60007 0x70008 0x80009 0x9000a 0x1000010 0x1010011 0x1020012 0x1030013 0x1040014 0x1050015 0x1060016 0x1070017 0x1080018 0x1090019 0x200001e 0x201001f 0x2020020 0x2030021 0x2040022 0x2050023 0x2060024 0x2070025 0x2080026 0x209001c 0x300000f 0x301002c 0x302002d 0x303002e 0x304002f 0x3050030 0x3060031 0x3070032 0x3080067 0x309006c 0x400002a 0x4010064 0x4020038 0x4030039 0x4040061 0x4050035 0x4060036 0x4080069 0x409006a 0x5000001 0x501000b 0x502000d 0x503000e 0x5040034>;
++	};
++    lcd-controller@1c0c000 {
++	compatible = "allwinner,sun5i-a13-tcon";
++	reg = <0x1c0c000 0x1000>;
++	interrupts = <0x2c>;
++	dmas = <0x04 0x01 0x0e>;
++	resets = <0x02 0x06>;
++	reset-names = "lcd";
++	clocks = <0x02 0x2b 0x02 0x5a 0x02 0x5c>;
++	clock-names = "ahb\0tcon-ch0\0tcon-ch1";
++	clock-output-names = "tcon-pixel-clock";
++	#clock-cells = <0x00>;
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <0x0a>;
++
++	ports {
++		#address-cells = <0x01>;
++		#size-cells = <0x00>;
++
++		port@0 {
++			reg = <0x00>;
++
++			endpoint {
++				remote-endpoint = <0x0b>;
++				phandle = <0x24>;
++			};
++		};
++
++		port@1 {
++			#address-cells = <0x01>;
++			#size-cells = <0x00>;
++			reg = <0x01>;
++
++			endpoint@1 {
++				reg = <0x01>;
++				remote-endpoint = <0x0c>;
++				allwinner,tcon-channel = <0x01>;
++				phandle = <0x08>;
++			};
++
++			endpoint@0 {
++				reg = <0x00>;
++				remote-endpoint = <0x0d>;
++				phandle = <0x2e>;
++			};
++		};
++	};
++};
+ };
+ 
+ &i2c2 {
